@@ -106,8 +106,8 @@ class SetNewPasswordAPIViewSerializer(serializers.Serializer):
             user = User.objects.get(id=id)
             if PasswordResetTokenGenerator().check_token(user, token) is False:
                 raise serializers.ValidationError('The reset link is inValid',401)
-            self.user.set_password(password)
-            self.user.save()
-            return self.user
+            user.set_password(password)
+            user.save()
+            return user
         except Exception as e:
             raise serializers.ValidationError('The reset link is inValid',401)
