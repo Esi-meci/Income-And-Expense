@@ -1,13 +1,14 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from faker import Faker
-fake = Faker()
+from authentication import User
 
 class TestSetUp(APITestCase):
 
     def setUp(self):
         self.register_url = reverse('registers')
         self.login_url = reverse('Login')
+        self.fake = Faker()
         
         self.user_data={
             'email':    fake.email(),
