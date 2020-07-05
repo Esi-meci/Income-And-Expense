@@ -34,7 +34,6 @@ class RegisterView(generics.GenericAPIView):
         user_data =serializer.data 
         user= User.objects.get(email=user_data['email'])
         token = RefreshToken.for_user(user)
-
         current_site = get_current_site(request).domain
         relativeLink=reverse('verifyemail')
         absurl='http://'+current_site+relativeLink+'?token='+str(token.access_token)
@@ -43,7 +42,6 @@ class RegisterView(generics.GenericAPIView):
            'email_body': email_body, 'to_email': user.email, 'email_subject':'verify your email'
         }
         Util.send_email(data)
-
         return Response(user_data,status=status.HTTP_201_CREATED)
 
 # the below block of codes is used when swagger is not in play
