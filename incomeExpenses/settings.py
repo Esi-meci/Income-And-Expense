@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = '3j!o0aw4-m^+id8h98$kuvl)*h%$)9*1ow4jrd9u6k^vw9^lrru'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -163,8 +163,8 @@ SIMPLE_JWT = {
 EMAIL_USE_TLS=True
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = 'gowinmercy@gmail.com'
+EMAIL_HOST_PASSWORD = '8mypassword8'
 
 #  this gives access to everyone to connect to the web server
 CORS_ORIGIN_ALLOW_ALL=True
