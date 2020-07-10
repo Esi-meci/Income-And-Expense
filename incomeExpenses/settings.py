@@ -169,4 +169,4 @@ EMAIL_HOST_PASSWORD = '8mypassword8'
 #  this gives access to everyone to connect to the web server
 CORS_ORIGIN_ALLOW_ALL=True
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
