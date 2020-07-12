@@ -60,7 +60,6 @@ class RegisterView(generics.GenericAPIView):
 #         except jwt.exceptions.DecodeError as identifier:
 #             return Response({'error':'Invalid Token'}, status=status.HTTP_400_BAD_REQUEST)
 
-
 # in other to customise a token while using swagger, the below block of codes for verifying Email is needed
 class VerifyEmail(views.APIView):
     serializer_class = EmailVerificationSerializer
