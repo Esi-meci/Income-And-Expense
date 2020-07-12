@@ -113,7 +113,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
-    Serializer_class = PasswordTokenSerializer
+    serializer_class = PasswordTokenSerializer
     def get(self, request):
         # try:
         #     id = smart_str(urlsafe_base64_decode(uidb64))
@@ -124,7 +124,7 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
         # except DjangoUnicodeDecodeError as identifier:
         #     if not PasswordResetTokenGenerator():
         #         return Response({'error':'Token is not Valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
-        serializer = self.Serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'Success':True, 'message':'Credentiald Valid', 'data' :serializer.data}, status=status.HTTP_200_OK)
 class SetNewPasswordAPIView(generics.GenericAPIView):

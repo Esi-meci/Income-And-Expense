@@ -90,8 +90,8 @@ class RequestPasswordResetEmailSerializer(serializers.Serializer):
 
 
 class PasswordTokenSerializer(serializers.Serializer):
-    uidb64 = serializers.CharField(min_lenght=1)
-    token = serializers.CharField(min_lengt = 1)
+    uidb64 = serializers.CharField(min_length=1)
+    token = serializers.CharField(min_length = 1)
     def validate(self, attrs):
         try:
             uidb64 = attrs.get('uidb64', '')
