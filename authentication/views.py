@@ -60,6 +60,7 @@ class RegisterView(generics.GenericAPIView):
 #         except jwt.exceptions.DecodeError as identifier:
 #             return Response({'error':'Invalid Token'}, status=status.HTTP_400_BAD_REQUEST)
 
+
 # in other to customise a token while using swagger, the below block of codes for verifying Email is needed
 class VerifyEmail(views.APIView):
     serializer_class = EmailVerificationSerializer
@@ -95,7 +96,6 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
     def post(self, request):
         data={'request':request, 'data': request.data}
         serializer = self.serializer_class(data=request.data)
-        # def validate(self, attrs):
         email = request.data['email']            
         if User.objects.filter(email = email).exists():
             user= User.objects.get(email=email)
@@ -115,15 +115,6 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 class PasswordTokenCheckAPI(generics.GenericAPIView):
     serializer_class = PasswordTokenSerializer
     def get(self, request):
-        # try:
-        #     id = smart_str(urlsafe_base64_decode(uidb64))
-        #     user = User.objects.get(id = id)
-        #     if PasswordResetTokenGenerator().check_token(user,token) is False:
-        #         return Response({'error': 'Token is not valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
-        #     return Response({'Success':True, 'message':'Credentiald Valid', 'uidb64':uidb64, 'token':token}, status=status.HTTP_200_OK)
-        # except DjangoUnicodeDecodeError as identifier:
-        #     if not PasswordResetTokenGenerator():
-        #         return Response({'error':'Token is not Valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response({'Success':True, 'message':'Credentiald Valid', 'data' :serializer.data}, status=status.HTTP_200_OK)
