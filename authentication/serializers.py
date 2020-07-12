@@ -89,6 +89,25 @@ class RequestPasswordResetEmailSerializer(serializers.Serializer):
     #             return super().validate(attrs)
 
 
+class PasswordTokenSerializer(serializers.Serializer):
+    uidb64 = serializers.CharField(min_lenght=1)
+    token = serializers.CharField(min_lengt = 1)
+    def validate(self, attrs):
+        try:
+            uidb64 = attrs.get('uidb64', '')
+            token = attrs.get('token', '')
+            id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id = id)
+            if PasswordResetTokenGenerator().check_token(user,token) is False:
+                raise serializers.ValidationError('Token is not valid any more', 401)
+            return {
+            'token':token,
+            'uidb64':uidb64,
+            }
+        except DjangoUnicodeDecodeError as identifier:
+            if not PasswordResetTokenGenerator():
+                return serializers.ValidationError('Token is not Valid any more', status=401)
+
 class SetNewPasswordAPIViewSerializer(serializers.Serializer):
     password = serializers.CharField(min_length=6, max_length=68, write_only=True)
     token = serializers.CharField(min_length=1, write_only=True)

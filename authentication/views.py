@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status,views
 from .serializers import (RegisterSerializer, 
 EmailVerificationSerializer,LoginSerializer,
-RequestPasswordResetEmailSerializer, SetNewPasswordAPIViewSerializer)
+RequestPasswordResetEmailSerializer, SetNewPasswordAPIViewSerializer, PasswordTokenSerializer)
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
@@ -113,17 +113,20 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
-    def get(self, request, uidb64, token):
-        try:
-            id = smart_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(id = id)
-            if PasswordResetTokenGenerator().check_token(user,token) is False:
-                return Response({'error': 'Token is not valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
-            return Response({'Success':True, 'message':'Credentiald Valid', 'uidb64':uidb64, 'token':token}, status=status.HTTP_200_OK)
-        except DjangoUnicodeDecodeError as identifier:
-            if not PasswordResetTokenGenerator():
-                return Response({'error':'Token is not Valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
-
+    Serializer_class = PasswordTokenSerializer
+    def get(self, request):
+        # try:
+        #     id = smart_str(urlsafe_base64_decode(uidb64))
+        #     user = User.objects.get(id = id)
+        #     if PasswordResetTokenGenerator().check_token(user,token) is False:
+        #         return Response({'error': 'Token is not valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
+        #     return Response({'Success':True, 'message':'Credentiald Valid', 'uidb64':uidb64, 'token':token}, status=status.HTTP_200_OK)
+        # except DjangoUnicodeDecodeError as identifier:
+        #     if not PasswordResetTokenGenerator():
+        #         return Response({'error':'Token is not Valid any more'}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = self.Serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({'Success':True, 'message':'Credentiald Valid', 'data' :serializer.data}, status=status.HTTP_200_OK)
 class SetNewPasswordAPIView(generics.GenericAPIView):
     serializer_class= SetNewPasswordAPIViewSerializer
 
